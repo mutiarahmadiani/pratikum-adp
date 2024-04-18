@@ -1,0 +1,75 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<int> inputArray() {
+    string input;
+    while (true) {
+        cout << "Masukkan array (bilangan bulat dari 0 sampai 9, tanpa spasi): ";
+        cin >> input;
+        if (input.length() != 10) {
+            cout << "Input tidak sesuai. Mohon masukkan kembali." << endl;
+            continue;
+        }
+        bool valid = true;
+        for (char c : input) {
+            if (c < '0' || c > '9') {
+                valid = false;
+                break;
+            }
+        }
+        if (!valid) {
+            cout << "Input tidak sesuai. Mohon masukkan kembali." << endl;
+            continue;
+        }
+        break;
+    }
+vector<int> arr(10);
+    for (int i = 0; i < 10; ++i) {
+        arr[i] = input[i] - '0';
+    }
+    return arr;
+}
+
+void findUniqueElements(const vector<int>& arr1, const vector<int>& arr2, vector<int>& uniqueInArr1, vector<int>& uniqueInArr2, vector<int>& commonElements) {
+    for (int i = 0; i < 10; ++i) {
+        if (arr1[i] && !arr2[i]) {
+            uniqueInArr1.push_back(i);
+        } else if (arr2[i] && !arr1[i]) {
+            uniqueInArr2.push_back(i);
+        } else if (arr1[i] && arr2[i]) {
+            commonElements.push_back(i);
+        }
+    }
+}
+
+int main() {
+    cout << "Masukkan array pertama:" << endl;
+    vector<int> array1 = inputArray();
+
+    cout << "Masukkan array kedua:" << endl;
+    vector<int> array2 = inputArray();
+vector<int> uniqueInArray1, uniqueInArray2, commonElements;
+    findUniqueElements(array1, array2, uniqueInArray1, uniqueInArray2, commonElements);
+
+    cout << "Elemen yang hanya berada di array pertama:";
+    for (int num : uniqueInArray1) {
+        cout << " " << num;
+    }
+    cout << endl;
+
+    cout << "Elemen yang hanya berada di array kedua:";
+    for (int num : uniqueInArray2) {
+        cout << " " << num;
+    }
+    cout << endl;
+
+    cout << "Elemen yang berada di kedua array:";
+    for (int num : commonElements) {
+        cout << " " << num;
+    }
+    cout << endl;
+
+    return 0;
+}
